@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
-using System.Web.SessionState;
 using ElectronicColorCode.Controllers;
 using ElectronicColorCode.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -34,13 +31,15 @@ namespace UnitTestECC
             ECCController controller = new ECCController();
             var result = controller.Index() as ViewResult;
             var ecc = (ECC)result.ViewData.Model;
+            IEnumerable<string> fractionList = Enum.GetNames(typeof(IecFractionalMultiplier)).ToList();
             IEnumerable<string> list = Enum.GetNames(typeof(IecSignificantFigures)).ToList();
+            IEnumerable<string> multipliersList = fractionList.Concat(list);
             IEnumerable<string> BandAStringList = GetStringList(ecc.BandAColors);
             Assert.IsTrue(list.SequenceEqual(BandAStringList));
             IEnumerable<string> BandBStringList = GetStringList(ecc.BandBColors);
             Assert.IsTrue(list.SequenceEqual(BandBStringList));
             IEnumerable<string> BandCStringList = GetStringList(ecc.BandCColors);
-            Assert.IsTrue(list.SequenceEqual(BandCStringList));
+            Assert.IsTrue(multipliersList.SequenceEqual(BandCStringList));
         }
 
         [TestMethod]

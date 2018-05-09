@@ -16,7 +16,7 @@ namespace ElectronicColorCode.Controllers
         {
             var colorAList = GetAllColors();
             var colorBList = GetAllColors();
-            var multiplierList = GetAllColors();
+            var multiplierList = GetMultipliersColors();
 
             // Create a list of SelectListItems so these can be rendered on the page
             ecc.BandAColors = GetSelectListItems(colorAList);
@@ -31,7 +31,7 @@ namespace ElectronicColorCode.Controllers
         {
             var colorAList = GetAllColors();
             var colorBList = GetAllColors();
-            var multiplierList = GetAllColors();
+            var multiplierList = GetMultipliersColors();
 
             model.BandAColors = GetSelectListItems(colorAList);
             model.BandBColors = GetSelectListItems(colorBList);
@@ -68,6 +68,13 @@ namespace ElectronicColorCode.Controllers
             }
 
             return selectList;
+        }
+
+        private IEnumerable<string> GetMultipliersColors()
+        {
+            List<string> positiveMultipliersList = Enum.GetNames(typeof(IecSignificantFigures)).ToList();
+            List<string> fractionalMultipliersList = Enum.GetNames(typeof(IecFractionalMultiplier)).ToList();
+            return fractionalMultipliersList.Concat(positiveMultipliersList);
         }
 
         private IEnumerable<string> GetAllColors()
