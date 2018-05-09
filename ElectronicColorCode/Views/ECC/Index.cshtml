@@ -1,0 +1,37 @@
+﻿@using ElectronicColorCode.Models
+@model ECC
+@{
+    ViewBag.Title = "Resistor Calculator";
+}
+
+<h2>Resistor Calculator</h2>
+
+<div class="form-group">
+    @using (Html.BeginForm("Index", "ECC", FormMethod.Post, new { role = "form" }))
+    {
+        <div class="col-lg-3">
+            <div class="row">
+                @Html.LabelFor(m => m.BandAColor)
+                @Html.DropDownListFor(m => m.BandAColor, Model.BandAColors, "Select a color for band A", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m=>m.BandAColor)
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.BandBColor)
+                @Html.DropDownListFor(m => m.BandBColor, Model.BandBColors, "Select a color for band B", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.BandBColor)
+            </div>
+            <div class="row">
+                @Html.LabelFor(m => m.BandCColor)
+                @Html.DropDownListFor(m => m.BandCColor, Model.BandCColors, "Select a color for band C", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.BandCColor)
+            </div>
+        </div>
+        <div class="col-lg-3">
+            @Html.LabelFor(m => m.OhmValue)
+            @Html.DisplayTextFor(m => m.OhmValue)
+        </div>
+        <div class="col-lg-3">
+            <button type="submit" class="btn btn-primary">Calculate</button>
+        </div>
+    }
+</div>
