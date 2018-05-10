@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Data.Entity;
 using System.Web.Mvc;
 
 namespace ElectronicColorCode.Models
@@ -23,15 +22,40 @@ namespace ElectronicColorCode.Models
         public string BandCColor { get; set; }
         public IEnumerable<SelectListItem> BandCColors { get; set; }
 
+        [Required(ErrorMessage = "Please select a value for Band ")]
+        [Display(Name = "Tolerance")]
+        public string BandDColor { get; set; }
+        public IEnumerable<SelectListItem> BandDColors { get; set; }
+
         [Display(Name = "Ohm Value")]
         public double OhmValue { get; set; }
+
+        [Display(Name = "Upper Bound")]
+        public double UpperBoundValue { get; set; }
+
+        [Display(Name = "Lower Bound")]
+        public double LowerBoundValue { get; set; }
 
         public ECC()
         {
             this.OhmValue = 0;
+            BandDColor = "None";
         }
+
+        public static readonly Dictionary<String, double> Tolerance = new Dictionary<string, double>
+        {
+            {"None",20 },
+            {"Silver", 10},
+            {"Gold", 5 },
+            {"Brown", 1 },
+            {"Green",0.5 },
+            {"Blue",0.25 },
+            {"Violet",0.1 },
+            {"Gray",0.05 }
+        };
+
         //TODO Add functionality for error range
-        public double CalculateOhmValue(string bandAColor, string bandBColor, string bandCColor, string bandDColor)
+        public double CalculateOhmValue(string bandAColor, string bandBColor, string bandCColor)
         {
             if (bandAColor != null &&
                 bandBColor != null &&
@@ -56,10 +80,37 @@ namespace ElectronicColorCode.Models
             return -1;
         }
 
-        public void CalculateOhmValue()
+        public void Calculate()
         {
-            //TODO implement band D
-            this.OhmValue = CalculateOhmValue(BandAColor, BandBColor, BandCColor, "white");
+            this.OhmValue = CalculateOhmValue(BandAColor, BandBColor, BandCColor);
+            this.UpperBoundValue = CalculateUpperBoundValue(BandDColor);
+            this.LowerBoundValue = CalculateLowerBoundValue(BandDColor);
+        }
+
+        public double CalculateUpperBoundValue(string bandDColor)
+        {
+            double tolerance;
+            if(bandDColor != null &&
+                OhmValue != -1 &&
+                Tolerance.TryGetValue(bandDColor,out tolerance))
+            {
+                double toleranceValue = OhmValue * tolerance/100;
+                return OhmValue + toleranceValue;
+            }
+            return -1;
+        }
+
+        public double CalculateLowerBoundValue(string bandDColor)
+        {
+            double tolerance;
+            if (bandDColor != null &&
+                OhmValue != -1 &&
+                Tolerance.TryGetValue(bandDColor, out tolerance))
+            {
+                double toleranceValue = OhmValue * tolerance / 100;
+                return OhmValue - toleranceValue;
+            }
+            return -1;
         }
     }
 }

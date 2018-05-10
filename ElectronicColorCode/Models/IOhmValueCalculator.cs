@@ -43,6 +43,8 @@ namespace ElectronicColorCode.Models
         /// <param name="bandCColor">The color of the decimal multiplier band.</param>
 
         /// <param name="bandDColor">The color of the tolerance value band.</param>
-        double CalculateOhmValue(string bandAColor, string bandBColor, string bandCColor, string bandDColor);
+        double CalculateOhmValue(string bandAColor, string bandBColor, string bandCColor);
+        double CalculateUpperBoundValue(string bandDColor);
+        double CalculateLowerBoundValue(string bandDColor);
     }
 }

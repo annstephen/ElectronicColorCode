@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ElectronicColorCode.Controllers
@@ -17,11 +16,13 @@ namespace ElectronicColorCode.Controllers
             var colorAList = GetAllColors();
             var colorBList = GetAllColors();
             var multiplierList = GetMultipliersColors();
+            var toleranceList = GetToleranceColors();
 
             // Create a list of SelectListItems so these can be rendered on the page
             ecc.BandAColors = GetSelectListItems(colorAList);
             ecc.BandBColors = GetSelectListItems(colorBList);
             ecc.BandCColors = GetSelectListItems(multiplierList);
+            ecc.BandDColors = GetSelectListItems(toleranceList);
 
             return View(ecc);
         }
@@ -32,10 +33,12 @@ namespace ElectronicColorCode.Controllers
             var colorAList = GetAllColors();
             var colorBList = GetAllColors();
             var multiplierList = GetMultipliersColors();
+            var toleranceList = GetToleranceColors();
 
             model.BandAColors = GetSelectListItems(colorAList);
             model.BandBColors = GetSelectListItems(colorBList);
             model.BandCColors = GetSelectListItems(multiplierList);
+            model.BandDColors = GetSelectListItems(toleranceList);
 
 
             if (ModelState.IsValid)
@@ -51,7 +54,7 @@ namespace ElectronicColorCode.Controllers
         public void Calculate()
         {
             var model = Session["ECCModel"] as ECC;
-            model.CalculateOhmValue();
+            model.Calculate();
         }
 
         private IEnumerable<SelectListItem> GetSelectListItems(IEnumerable<string> colorList)
@@ -68,6 +71,11 @@ namespace ElectronicColorCode.Controllers
             }
 
             return selectList;
+        }
+
+        private IEnumerable<string> GetToleranceColors()
+        {
+            return ECC.Tolerance.Keys;
         }
 
         private IEnumerable<string> GetMultipliersColors()

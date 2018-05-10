@@ -9,29 +9,56 @@
 <div class="form-group">
     @using (Html.BeginForm("Index", "ECC", FormMethod.Post, new { role = "form" }))
     {
-        <div class="col-lg-3">
+    <div class="row">
+        <div class="col-lg-5">            
             <div class="row">
                 @Html.LabelFor(m => m.BandAColor)
                 @Html.DropDownListFor(m => m.BandAColor, Model.BandAColors, "Select a color for band A", new { @class = "form-control" })
-                @Html.ValidationMessageFor(m=>m.BandAColor)
+                @Html.ValidationMessageFor(m => m.BandAColor)
             </div>
+            <br />
             <div class="row">
                 @Html.LabelFor(m => m.BandBColor)
                 @Html.DropDownListFor(m => m.BandBColor, Model.BandBColors, "Select a color for band B", new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.BandBColor)
             </div>
+            <br />
             <div class="row">
                 @Html.LabelFor(m => m.BandCColor)
                 @Html.DropDownListFor(m => m.BandCColor, Model.BandCColors, "Select a color for band C", new { @class = "form-control" })
                 @Html.ValidationMessageFor(m => m.BandCColor)
             </div>
+            <br />
+            <div class="row">
+                @Html.LabelFor(m => m.BandDColor)
+                @Html.DropDownListFor(m => m.BandDColor, Model.BandDColors, new { @class = "form-control", @Value="None" })
+                @Html.ValidationMessageFor(m => m.BandDColor)
+            </div>
+            <br />
         </div>
-        <div class="col-lg-3">
-            @Html.LabelFor(m => m.OhmValue)
-            @Html.DisplayTextFor(m => m.OhmValue)
+        <div class="col-lg-5 text-center">
+            <br />
+            <div class="row">
+                @Html.LabelFor(m => m.OhmValue)
+                @Html.DisplayTextFor(m => m.OhmValue)
+            </div>
+            <br />
+            <div class="row">
+                @Html.LabelFor(m => m.UpperBoundValue)
+                @Html.DisplayTextFor(m => m.UpperBoundValue)
+            </div>
+            <br />
+            <div class="row">
+                @Html.LabelFor(m => m.LowerBoundValue)
+                @Html.DisplayTextFor(m => m.LowerBoundValue)
+            </div>
+            <br />
         </div>
-        <div class="col-lg-3">
+    </div>
+    <div class="row">
+        <div class="text-center">
             <button type="submit" class="btn btn-primary">Calculate</button>
         </div>
+    </div>
     }
 </div>

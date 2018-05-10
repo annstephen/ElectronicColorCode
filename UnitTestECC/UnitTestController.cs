@@ -13,24 +13,23 @@ namespace UnitTestECC
     [TestClass]
     public class UnitTestController
     {
+        ECCController controller;
+        ECC ecc;
+        Mock<ControllerContext> context;
+        Mock<HttpSessionStateBase> session;
 
         [TestMethod]
         public void TestIndexListPopulate()
         {
-            ECCController controller = new ECCController();
-            var result = controller.Index() as ViewResult;
-            var ecc = (ECC)result.ViewData.Model;
             Assert.IsNotNull(ecc.BandAColors);
             Assert.IsNotNull(ecc.BandBColors);
             Assert.IsNotNull(ecc.BandCColors);
+            Assert.IsNotNull(ecc.BandDColors);
         }
 
         [TestMethod]
         public void TestIndexListPopulateValues()
         {
-            ECCController controller = new ECCController();
-            var result = controller.Index() as ViewResult;
-            var ecc = (ECC)result.ViewData.Model;
             IEnumerable<string> fractionList = Enum.GetNames(typeof(IecFractionalMultiplier)).ToList();
             IEnumerable<string> list = Enum.GetNames(typeof(IecSignificantFigures)).ToList();
             IEnumerable<string> multipliersList = fractionList.Concat(list);
@@ -43,22 +42,25 @@ namespace UnitTestECC
         }
 
         [TestMethod]
+        public void TestIndexToleranceListPopulateValues()
+        {
+            IEnumerable<string> ToleranceList = ECC.Tolerance.Keys;
+            IEnumerable<string> BandDStringList = GetStringList(ecc.BandDColors);
+            Assert.IsTrue(ToleranceList.SequenceEqual(BandDStringList));
+        }
+
+        [TestMethod]
         public void TestIndexPostValues()
         {
-            var context = new Mock<ControllerContext>();
-            var session = new Mock<HttpSessionStateBase>();
-            context.Setup(m => m.HttpContext.Session).Returns(session.Object);
-            ECCController controller = new ECCController();
-            controller.ControllerContext = context.Object;
-            var result = controller.Index() as ViewResult;
-            var ecc = (ECC)result.ViewData.Model;
             ecc.BandAColor = "Yellow";
             ecc.BandBColor = "Violet";
             ecc.BandCColor = "Red";
-            session.Setup(s => s["ECCModel"]).Returns(ecc);
-            result = controller.Index(ecc) as ViewResult;
+            ecc.BandDColor = "Gold";
+            var result = controller.Index(ecc) as ViewResult;
             ecc = (ECC)result.ViewData.Model;
             Assert.AreEqual(4700, ecc.OhmValue);
+            Assert.AreEqual(4465, ecc.LowerBoundValue);
+            Assert.AreEqual(4935, ecc.UpperBoundValue);
         }
 
         [TestMethod]
@@ -67,6 +69,19 @@ namespace UnitTestECC
             ECCController controller = new ECCController();
             var result = controller.Contact() as ViewResult;
             Assert.AreEqual("Contact", result.ViewName);
+        }
+
+        [TestInitialize]
+        public void TestSetup()
+        {
+            controller = new ECCController();
+            var result = controller.Index() as ViewResult;
+            ecc = (ECC)result.ViewData.Model;
+            context = new Mock<ControllerContext>();
+            session = new Mock<HttpSessionStateBase>();
+            context.Setup(m => m.HttpContext.Session).Returns(session.Object);
+            controller.ControllerContext = context.Object;
+            session.Setup(s => s["ECCModel"]).Returns(ecc);
         }
 
         private IEnumerable<string> GetStringList(IEnumerable<SelectListItem> selectList)
