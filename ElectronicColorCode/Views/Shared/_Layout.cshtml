@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title  Electronic Color Code</title>
     <script type="text/javascript">
-        function loadColors() {
-            updateStyleById("bandA");
-            updateStyleById("bandB");
-            updateStyleById("bandC");
-            updateStyleById("bandD");
+        function loadColors(page) {
+            if (page.document.title == "Resistor Calculator Electronic Color Code") {
+                updateStyleById("bandA");
+                updateStyleById("bandB");
+                updateStyleById("bandC");
+                updateStyleById("bandD");
+            }
         };
         function updateStyle(select) {
             updateStyleById(select.id);
@@ -31,7 +33,8 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body onload="loadColors()">
+<body  onload="loadColors(this
+    )">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
