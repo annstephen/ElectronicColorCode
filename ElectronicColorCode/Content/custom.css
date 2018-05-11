@@ -50,3 +50,7 @@ select option[value ="White"] {
     background-color: #FFFFFF;
     color: #000000;
 }
+select option[value ="None"] {
+    background-color: #FFFFFF;
+    color: #000000;
+}

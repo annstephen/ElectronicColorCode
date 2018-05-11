@@ -48,6 +48,7 @@ namespace ElectronicColorCode.Models
             {"Silver", 10},
             {"Gold", 5 },
             {"Brown", 1 },
+            {"Red", 2 },
             {"Green",0.5 },
             {"Blue",0.25 },
             {"Violet",0.1 },
@@ -89,12 +90,8 @@ namespace ElectronicColorCode.Models
 
         public double CalculateUpperBoundValue(string bandDColor)
         {
-            double tolerance;
-            if(bandDColor != null &&
-                OhmValue != -1 &&
-                Tolerance.TryGetValue(bandDColor,out tolerance))
+            if (CalculateTolerance(out double toleranceValue, bandDColor))
             {
-                double toleranceValue = OhmValue * tolerance/100;
                 return OhmValue + toleranceValue;
             }
             return -1;
@@ -102,15 +99,25 @@ namespace ElectronicColorCode.Models
 
         public double CalculateLowerBoundValue(string bandDColor)
         {
-            double tolerance;
-            if (bandDColor != null &&
-                OhmValue != -1 &&
-                Tolerance.TryGetValue(bandDColor, out tolerance))
+
+            if (CalculateTolerance(out double toleranceValue, bandDColor))
             {
-                double toleranceValue = OhmValue * tolerance / 100;
                 return OhmValue - toleranceValue;
             }
             return -1;
+        }
+
+        private bool CalculateTolerance(out double toleranceValue, string bandDColor)
+        {
+            toleranceValue = -1;
+            if (bandDColor != null &&
+                  OhmValue != -1 &&
+                  Tolerance.TryGetValue(bandDColor, out double tolerance))
+            {
+                toleranceValue = OhmValue * tolerance / 100;
+                return true;
+            }
+            return false;
         }
     }
 }

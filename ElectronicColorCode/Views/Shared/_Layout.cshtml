@@ -22,6 +22,10 @@
                 select.style.color = style.getPropertyValue("color");
                 select.style.backgroundColor = value.text;
             }
+            else {
+                select.style.backgroundColor = "White";
+                select.style.color = "Black";
+            }
         }
     </script>
     @Styles.Render("~/Content/css")
