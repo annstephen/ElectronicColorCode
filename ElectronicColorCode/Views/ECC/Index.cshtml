@@ -13,25 +13,25 @@
         <div class="col-lg-5">            
             <div class="row">
                 @Html.LabelFor(m => m.BandAColor)
-                @Html.DropDownListFor(m => m.BandAColor, Model.BandAColors, "Select a color for band A", new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.BandAColor, Model.BandAColors, "Select a color for band A", new {id="bandA", @class = "form-control", onchange= "updateStyle(bandA)" })
                 @Html.ValidationMessageFor(m => m.BandAColor)
             </div>
             <br />
             <div class="row">
                 @Html.LabelFor(m => m.BandBColor)
-                @Html.DropDownListFor(m => m.BandBColor, Model.BandBColors, "Select a color for band B", new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.BandBColor, Model.BandBColors, "Select a color for band B", new { id = "bandB", @class = "form-control", onchange= "updateStyle(bandB)" })
                 @Html.ValidationMessageFor(m => m.BandBColor)
             </div>
             <br />
             <div class="row">
                 @Html.LabelFor(m => m.BandCColor)
-                @Html.DropDownListFor(m => m.BandCColor, Model.BandCColors, "Select a color for band C", new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.BandCColor, Model.BandCColors, "Select a color for band C", new { id = "bandC", @class = "form-control", onchange = "updateStyle(bandC)" })
                 @Html.ValidationMessageFor(m => m.BandCColor)
             </div>
             <br />
             <div class="row">
                 @Html.LabelFor(m => m.BandDColor)
-                @Html.DropDownListFor(m => m.BandDColor, Model.BandDColors, new { @class = "form-control", @Value="None" })
+                @Html.DropDownListFor(m => m.BandDColor, Model.BandDColors, new { id = "bandD", @class = "form-control", @Value="None", onchange = "updateStyle(bandD)" })
                 @Html.ValidationMessageFor(m => m.BandDColor)
             </div>
             <br />

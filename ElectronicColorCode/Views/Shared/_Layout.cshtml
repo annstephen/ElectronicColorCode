@@ -4,10 +4,30 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title  Electronic Color Code</title>
+    <script type="text/javascript">
+        function loadColors() {
+            updateStyleById("bandA");
+            updateStyleById("bandB");
+            updateStyleById("bandC");
+            updateStyleById("bandD");
+        };
+        function updateStyle(select) {
+            updateStyleById(select.id);
+        }
+        function updateStyleById(id) {
+            var select = document.getElementById(id);
+            var value = select.options[select.selectedIndex];
+            if (value.text != "None") {
+                var style = window.getComputedStyle ? getComputedStyle(value, null) : value.currentStyle;
+                select.style.color = style.getPropertyValue("color");
+                select.style.backgroundColor = value.text;
+            }
+        }
+    </script>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body onload="loadColors()">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">

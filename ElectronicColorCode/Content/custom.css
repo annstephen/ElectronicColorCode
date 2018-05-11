@@ -1,0 +1,52 @@
+﻿select option[value ="Black"] {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+select option[value ="Brown"] {
+    background-color: #A52A2A;
+    color: #FFFFFF;
+}
+select option[value ="Red"] {
+    background-color: #FF0000;
+    color: #FFFFFF;
+}
+select option[value ="Orange"] {
+    background-color: #FFA500;
+    color: #FFFFFF;
+}
+select option[value ="Yellow"] {
+    background-color: #FFFF00;
+    color: #000000;
+}
+select option[value ="Green"] {
+    background-color: #008000;
+    color: #FFFFFF;
+}
+select option[value ="Blue"] {
+    background-color: #0000FF;
+    color: #FFFFFF;
+}
+select option[value ="Violet"] {
+    background-color: #EE82EE;
+    color: #FFFFFF;
+}
+select option[value ="Gray"] {
+    background-color: #808080;
+    color: #FFFFFF;
+}
+select option[value ="Gold"] {
+    background-color: #FFD700;
+    color: #000000;
+}
+select option[value ="Silver"] {
+    background-color: #C0C0C0;
+    color: #000000;
+}
+select option[value ="Pink"] {
+    background-color: #FFC0CB;
+    color: #000000;
+}
+select option[value ="White"] {
+    background-color: #FFFFFF;
+    color: #000000;
+}
